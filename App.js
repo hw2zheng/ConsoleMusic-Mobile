@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import { DrawerNavigator } from 'react-navigation'
+import { DrawerNavigator } from 'react-navigation';
 import { COLOR, ThemeProvider } from 'react-native-material-ui';
 
 import HomeScreen from './src/sections/homescreen';
@@ -12,30 +12,28 @@ const SideBarNav = DrawerNavigator({
   Home: { screen: HomeScreen },
   Library: { screen: Library },
   SetlistEditor: { screen: SetlistEditor },
-  Sources: { screen: Sources },
+  Sources: { screen: Sources }
 });
 
 // Global Application Styles
 const uiTheme = {
   palette: {
-    primaryColor: COLOR.green500,
+    primaryColor: COLOR.green500
   },
   toolbar: {
     container: {
-      height: 50,
-    },
-  },
+      height: 50
+    }
+  }
 };
 
-
-
 class App extends Component {
-  render() {
+  render () {
     return (
       <ThemeProvider uiTheme={uiTheme}>
         <SideBarNav />
       </ThemeProvider>
-    )
+    );
   }
 }
 
