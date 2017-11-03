@@ -1,0 +1,5 @@
+module.exports = {
+  CONTENT_SELECTION: 0,
+  ACTIONS_AND_FILTER_SELECTION: 1,
+  END_SELECTION: 2
+};

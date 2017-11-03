@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
 import { DrawerNavigator } from 'react-navigation';
 import { COLOR, ThemeProvider } from 'react-native-material-ui';
 
@@ -18,7 +17,7 @@ const SideBarNav = DrawerNavigator({
 // Global Application Styles
 const uiTheme = {
   palette: {
-    primaryColor: COLOR.green500
+    primaryColor: '#2196F3'
   },
   toolbar: {
     container: {

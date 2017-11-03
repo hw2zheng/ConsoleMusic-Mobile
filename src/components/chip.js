@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 2,
     marginBottom: 5,
+    marginTop: 5,
     alignSelf: 'flex-start'
   }});
 

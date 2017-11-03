@@ -8,11 +8,10 @@ import {
   Menu,
   MenuContext,
   MenuOptions,
-  MenuOption,
   MenuTrigger,
   renderers
 } from 'react-native-popup-menu';
-import MenuComponent from '../components/menuComponent';
+import SetlistCreator from '../components/setlistCreator';
 
 export default class SetlistEditor extends Component {
   render () {
@@ -20,6 +19,7 @@ export default class SetlistEditor extends Component {
       <MenuContext>
         <Toolbar
           leftElement='menu'
+          onLeftElementPress={() => this.props.navigation.navigate('DrawerOpen')}
           centerElement='Setlist Editor'
           searchable={{
             autoFocus: true,
@@ -29,9 +29,7 @@ export default class SetlistEditor extends Component {
         <Menu renderer={renderers.SlideInMenu}>
           <MenuTrigger text='Select action' />
           <MenuOptions>
-            <MenuOption>
-              <MenuComponent />
-            </MenuOption>
+            <SetlistCreator />
           </MenuOptions>
         </Menu>
       </MenuContext>
