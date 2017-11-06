@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import { ScrollView, Text, View } from 'react-native';
-import { Button, Divider, Subheader } from 'react-native-material-ui';
+import { Button, Card, Divider, Subheader } from 'react-native-material-ui';
 import { TextField } from 'react-native-material-textfield';
 import Chip from '../components/chip';
 import STAGES from '../lib/stage-types';
@@ -147,28 +147,32 @@ export default class SetlistEditor extends Component {
         break;
       } case STAGES.ACTIONS_AND_FILTER_SELECTION: {
         menuItems = (
-          <View>
+          <ScrollView horizontal style={{flex: 1, flexDirection: 'row'}}>
             { this.renderActionsAndFilters() }
-          </View>
+          </ScrollView>
         );
         break;
       }
     }
-
     return (
-      <View>
+      <Card>
+        <Divider />
         <View>
           <Subheader style={{text: {textAlign: 'center'}}} text='Create a Command' />
         </View>
         <Divider />
-        { menuItems }
+        <View style={{flex: 1}}>
+          { menuItems }
+        </View>
         <Divider />
-        { this.selectedContentView() }
+        <View>
+          { this.selectedContentView() }
+        </View>
         <Divider />
         { this.state.selectedStage === STAGES.ACTIONS_AND_FILTER_SELECTION &&
           this.selectedActionsAndFiltersView()
         }
-      </View>
+      </Card>
     );
   }
 }
