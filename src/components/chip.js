@@ -22,9 +22,9 @@ export default class Chip extends Component {
   render () {
     return (
       <TouchableHighlight
-        onPress={() => 'test'}
+        onPress={this.props.onPress}
         underlayColor='#fff'>
-        <Text style={styles.submitText}>Chip Test</Text>
+        <Text style={styles.submitText}>{this.props.text}</Text>
       </TouchableHighlight>
     );
   }

@@ -1,8 +1,4 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  View
-} from 'react-native';
 import { Toolbar } from 'react-native-material-ui';
 import {
   Menu,
