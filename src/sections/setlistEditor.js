@@ -38,7 +38,7 @@ export default class SetlistEditor extends Component {
           ref={(c) => { this._panel = c; }}
           visible={this.state.visible}
           onRequestClose={() => this.setState({visible: false})}>
-          <View style={{flex: 1, position: 'relative', backgroundColor: 'white'}}>
+          <View style={{flex: 1, backgroundColor: 'white'}}>
             <SetlistCreator />
           </View>
         </SlidingUpPanel>

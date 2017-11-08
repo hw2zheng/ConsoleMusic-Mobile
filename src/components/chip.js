@@ -7,15 +7,19 @@ import {
 
 const styles = StyleSheet.create({
   submitText: {
-    backgroundColor: '#68a0cf',
-    borderRadius: 30,
     color: '#fff',
-    padding: 10,
     textAlign: 'center',
-    margin: 2,
     marginBottom: 5,
     marginTop: 5,
     alignSelf: 'flex-start'
+  },
+  highLight: {
+    backgroundColor: '#68a0cf',
+    borderRadius: 30,
+    padding: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
+    margin: 2
   }});
 
 export default class Chip extends Component {
@@ -23,6 +27,7 @@ export default class Chip extends Component {
     return (
       <TouchableHighlight
         onPress={this.props.onPress}
+        style={styles.highLight}
         underlayColor='#fff'>
         <Text style={styles.submitText}>{this.props.text}</Text>
       </TouchableHighlight>

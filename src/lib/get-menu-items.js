@@ -25,22 +25,31 @@ const actionsAndFilters = [
       {
         text: 'Artist',
         value: 'artist',
-        next: 'TEXT_INPUT'
+        prompt: 'with the name',
+        next: {
+          text: 'TEXT_INPUT'
+        }
       },
       {
         text: 'Title',
         value: 'title',
-        next: 'TEXT_INPUT'
+        next: {
+          text: 'TEXT_INPUT'
+        }
       },
       {
         text: 'Genre',
         value: 'genre',
-        next: 'TEXT_INPUT'
+        next: {
+          text: 'TEXT_INPUT'
+        }
       },
       {
         text: 'Album',
         value: 'album',
-        next: 'TEXT_INPUT'
+        next: {
+          text: 'TEXT_INPUT'
+        }
       }
     ]
   },

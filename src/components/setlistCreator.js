@@ -42,15 +42,32 @@ export default class SetlistEditor extends Component {
         return prevState;
       });
     };
-    return this.renderMenuChips(contentTypes, updateSelectedContent);
+    return (
+      <ScrollView horizontal style={{flexDirection: 'row'}}>
+        { this.renderMenuChips(contentTypes, updateSelectedContent) }
+      </ScrollView>
+    );
   }
 
   renderActionsAndFilters () {
     const actionsAndFilters = getMenuItems(STAGES.ACTIONS_AND_FILTER_SELECTION, this.state.currentSelections);
-    if (actionsAndFilters === 'TEXT_INPUT') {
-      const pushText = () => {
+    if (!actionsAndFilters) {
+      const pushCommand = () => {
         this.setState((prevState) => {
-          this.state.filterInput && prevState.currentSelections.push(this.state.filterInput);
+          prevState.commandItems.actionsAndFilters.push(this.state.currentSelections);
+          prevState.currentSelections = [];
+          return prevState;
+        });
+      };
+      return (
+        <Button primary text='Add action' onPress={pushCommand} />
+      );
+    }
+    if (actionsAndFilters.text === 'TEXT_INPUT') {
+      const pushText = () => {
+        console.log(this.state.filterInput);
+        this.setState((prevState) => {
+          this.state.filterInput && prevState.currentSelections.push({text: this.state.filterInput, next: actionsAndFilters.next});
           return prevState;
         });
       };
@@ -75,7 +92,7 @@ export default class SetlistEditor extends Component {
       }
     };
     return (
-      <ScrollView horizontal style={{flex: 1, flexDirection: 'row'}}>
+      <ScrollView horizontal style={{flexDirection: 'row'}}>
         { this.renderMenuChips(actionsAndFilters, updateActionsAndFilters) }
       </ScrollView>
     );
@@ -102,7 +119,8 @@ export default class SetlistEditor extends Component {
 
     return (
       <View>
-        <Text>Play Content From</Text>
+        <Subheader style={{text: {textAlign: 'center'}}} text='Playing Content From' />
+        <Divider />
         <ScrollView horizontal style={{flexDirection: 'row'}}>
           { contentChips }
           { contentChips.length > 0 &&
@@ -113,66 +131,68 @@ export default class SetlistEditor extends Component {
     );
   }
 
-  renderCommandRow () {
-
-  }
-
   selectedActionsAndFiltersView () {
-    const actionsAndFilterChips = _.map(this.state.commandItems.actionsAndFilters, (selection, index) => {
+    return _.map(this.state.commandItems.actionsAndFilters, (commandRow, index) => {
       return (
-        <View key={index} style={{ flexDirection: 'row' }}>
-          <Chip text={selection.text} />
-          <Text style={{ margin: 5, marginTop: 15 }}>{selection.prompt}</Text>
-        </View>
+        <ScrollView key={index}>
+          <View style={{ flexDirection: 'row' }}>
+            { _.map(commandRow, (selection, innerIndex) => {
+              return (
+                <View key={innerIndex}>
+                  <Chip text={selection.text} />
+                  <Text style={{ margin: 5, marginTop: 15 }}>{selection.prompt}</Text>
+                </View>
+              );
+            })
+            }
+            <Divider />
+          </View>
+        </ScrollView>
       );
     });
-
-    return (
-      <View>
-        <Text>Apply Actions and Filters</Text>
-        { actionsAndFilterChips }
-      </View>
-    );
   }
 
   render () {
-    let menuItems;
+    let menuItems, text;
+    const { commandItems } = this.state;
     switch (this.state.selectedStage) {
       case STAGES.CONTENT_SELECTION: {
         menuItems = (
-          <ScrollView horizontal style={{flex: 1, flexDirection: 'row'}}>
+          <View>
             { this.renderContentSelection() }
-          </ScrollView>
+          </View>
         );
+        text = 'Select a content source';
         break;
       } case STAGES.ACTIONS_AND_FILTER_SELECTION: {
         menuItems = (
-          <ScrollView horizontal style={{flex: 1, flexDirection: 'row'}}>
+          <View>
             { this.renderActionsAndFilters() }
-          </ScrollView>
+          </View>
         );
+        text = 'Select an Action or a Filter';
         break;
       }
     }
     return (
-      <Card>
-        <Divider />
-        <View>
-          <Subheader style={{text: {textAlign: 'center'}}} text='Create a Command' />
-        </View>
-        <Divider />
-        <View style={{flex: 1}}>
+      <View>
+        <Card>
+          <Subheader style={{text: {textAlign: 'center'}}} text={text} />
+          <Divider />
           { menuItems }
-        </View>
-        <Divider />
-        <View>
-          { this.selectedContentView() }
-        </View>
-        <Divider />
-        { this.state.selectedStage === STAGES.ACTIONS_AND_FILTER_SELECTION &&
-          this.selectedActionsAndFiltersView()
+        </Card>
+        { commandItems.contentSelections.length > 0 &&
+          <Card>
+            { this.selectedContentView() }
+          </Card>
         }
-      </Card>
+        <Divider />
+        <Card>
+          { commandItems.actionsAndFilters.length > 0 &&
+              this.selectedActionsAndFiltersView()
+          }
+        </Card>
+      </View>
     );
   }
 }
